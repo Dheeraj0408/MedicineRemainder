@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medicine Remainder</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" type="module"></script>
+  </head>
+  <body>
+    <h1>Remainder App</h1>
+    <div class="container">
+      <div class="clock">
+        <p>Time :</p>
+        <h2 id="time"></h2>
+      </div>
+      <div class="form">
+        <h3>Add Medicine</h3>
+        <form action="" method="post" id="form">
+          <!-- <input type="text" name="name" id="name" placeholder="Enter the Medicine Name">
+                <datalist id="name">
+                    <option value="Aspirin (Acetylsalicylic Acid)"></option>
+                    <option value="Paracetamol (Acetaminophen)"></option>
+                    <option value="Multivitamin Tablets"></option>
+                    <option value="Omega-3 Fish Oil Supplements"></option>
+                    <option value="Calcium Supplements"></option>
+                    <option value="Diphenhydramine (Benadryl)"></option>
+                    <option value="Loratadine (Claritin)"></option>
+                </datalist> -->
+          <select name="tablet" id="tablet">
+            <option selected disabled>Select your Tablet</option>
+            <script>
+              var tablets = [
+                { name: "Aspirin (Acetylsalicylic Acid)", dosage: 325 },
+                { name: "Paracetamol (Acetaminophen)", dosage: 500 },
+                { name: "Multivitamin Tablets", dosage: "Varies" },
+                { name: "Omega-3 Fish Oil Supplements", dosage: "Varies" },
+                { name: "Calcium Supplements", dosage: 1000 },
+                { name: "Diphenhydramine (Benadryl)", dosage: 25 },
+                { name: "Loratadine (Claritin)", dosage: 10 },
+              ];
+              var tab = document.getElementById("tablet");
+              tablets.forEach((val) => {
+                var option = document.createElement("option");
+                option.setAttribute("class","option")
+                option.innerHTML = val.name;
+                tab.appendChild(option);
+              });
+            </script>
+          </select>
+          <input
+            type="time"
+            name="remainder"
+            id="remainder"
+            placeholder="Enter the Time"
+          />
+          <input type="submit" value="Add remainder" />
+        </form>
+      </div>
+      <div id="alert">
+        <div id="message">Time to Take Medicine</div>
+        <input type="button" id="ok" value="ok"/>
+      </div>
+      <div class="table-div">
+        <h3>Medicine Remainders</h3>
+        <table id="table">
+          <thead>
+            <tr>
+              <th>Medicine Name</th>
+              <th>Remainder Time</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
