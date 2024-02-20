@@ -3,24 +3,31 @@ var form = document.getElementById("form");
 var medicineName = document.getElementById("name");
 var remainderTime = document.getElementById("remainder");
 var tableBody = document.getElementById("tbody");
-
+var alertMessage = document.getElementById("alert");
+var ok = document.getElementById("ok");
 var users = [];
 let remainders = [];
-
 function displayTime() {
   var currentTime = new Date();
   var hours = currentTime.getHours();
   var minutes = currentTime.getMinutes();
   var seconds = currentTime.getSeconds();
-  time.innerHTML = hours + ":" + minutes + ":" + seconds;
-  console.log((time.innerHTML = hours + ":" + minutes + ":" + seconds));
+  time.innerHTML =
+    (hours < 10 ? "0" : "") +
+    hours +
+    ":" +
+    (minutes < 10 ? "0" : "") +
+    minutes +
+    ":" +
+    (seconds < 10 ? "0" : "") +
+    seconds;
 }
-
 setInterval(displayTime, 1000);
 
 form.addEventListener("submit", addRemainder);
 function addRemainder(event) {
   event.preventDefault();
+  ``;
   console.log(event);
   let name = event.target[0].value;
   let time = event.target[1].value;
@@ -59,17 +66,43 @@ function displayRemainders() {
 tableBody.addEventListener("click", deleteRemainder);
 
 function deleteRemainder(event) {
-  if (event.target[2]) {
-    remainders[i]="";
+  if (event.target.classList.contains("delete")) {
+    var row = event.target.parentNode.parentNode;
+    var index = row.rowIndex - 1; // Adjust index to account for header row
+    remainders.splice(index, 1); // Remove the corresponding remainder from the array
+    displayRemainders(); // Update the displayed remainders
   }
 }
 
 function checkRemainders() {
-  var time2 = hours + ":" + minutes;
+  var currentTime = new Date();
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+  var time2 =
+    (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
   remainders.forEach((val) => {
-    if (val.time === time2) {
-      alert("Time to Take Message");
+    if (time2 === val.time) {
+      // Display alert notification
+      // alert("Time to Take " + val.name);
+      alertMessage.style.display = "block";
+      // Log the alert message in the console
+      console.log("Alert: Time to Take " + val.name);
     }
   });
 }
-setInterval(checkRemainders, 60000);
+
+ok.addEventListener("click", () => {
+  var reminderIndex = remainders.findIndex(
+    (reminder) => reminder.time === alertMessage.getAttribute("data-time")
+  );
+
+  if (reminderIndex !== -1) {
+    // Remove the reminder from the array
+    remainders.splice(reminderIndex, 1);
+    // Update displayed remainders
+    displayRemainders();
+  }
+
+  alertMessage.style.display = "none";
+});
+setInterval(checkRemainders, 60000); // Check remainders every minute
