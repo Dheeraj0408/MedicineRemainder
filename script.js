@@ -5,7 +5,8 @@ var remainderTime = document.getElementById("remainder");
 var tableBody = document.getElementById("tbody");
 var alertMessage = document.getElementById("alert");
 var ok = document.getElementById("ok");
-var users = [];
+var audio;
+// var users = [];
 let remainders = [];
 function displayTime() {
   var currentTime = new Date();
@@ -22,7 +23,7 @@ function displayTime() {
     (seconds < 10 ? "0" : "") +
     seconds;
 }
-setInterval(displayTime, 1000);
+setInterval(displayTime, 1000); 
 
 form.addEventListener("submit", addRemainder);
 function addRemainder(event) {
@@ -85,6 +86,11 @@ function checkRemainders() {
       // Display alert notification
       // alert("Time to Take " + val.name);
       alertMessage.style.display = "block";
+       
+      // Play audio
+      audio = new Audio('ring.wav'); // Replace 'your-audio-file-path.mp3' with the actual path to your audio file
+      audio.loop=true;
+      audio.play();
       // Log the alert message in the console
       console.log("Alert: Time to Take " + val.name);
     }
@@ -95,6 +101,7 @@ ok.addEventListener("click", () => {
   var reminderIndex = remainders.findIndex(
     (reminder) => reminder.time === alertMessage.getAttribute("data-time")
   );
+  
 
   if (reminderIndex !== -1) {
     // Remove the reminder from the array
@@ -102,7 +109,10 @@ ok.addEventListener("click", () => {
     // Update displayed remainders
     displayRemainders();
   }
-
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0; // Reset audio to the beginning
+  }
   alertMessage.style.display = "none";
 });
 setInterval(checkRemainders, 60000); // Check remainders every minute
