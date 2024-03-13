@@ -6,9 +6,8 @@ var tableBody = document.getElementById("tbody");
 var alertMessage = document.getElementById("alert");
 var msg = document.getElementById("message");
 var ok = document.getElementById("ok");
-var error1 = document.getElementById("selectError");
-var error2 = document.getElementById("timeError");
 var audio;
+// var users = [];
 let remainders = [];
 function displayTime() {
   var currentTime = new Date();
@@ -30,13 +29,14 @@ setInterval(displayTime, 1000);
 form.addEventListener("submit", addRemainder);
 function addRemainder(event) {
   event.preventDefault();
+  console.log(event);
   let name = event.target[0].value;
   let time = event.target[1].value;
   let remainder = {
     name: name,
     time: time,
   };
-  if (name && time && validateInputs(name, time)) {
+  if (name !== "Select your Tablet" && time) {
     remainders.push(remainder);
     event.target[0].value = "";
     event.target[1].value = "";
@@ -44,57 +44,35 @@ function addRemainder(event) {
 
   displayRemainders();
 }
-
-function validateInputs(input1, input2) {
-  let isValid = true;
-  if (input1 === "Select your Tablet") {
-    error1.textContent = "Please select a tablet.";
-    error1.style.display = "block";
-    error1.style.color = "#e34244";
-    tabletSelect.style.borderColor = "#e34244";
-    isValid = false;
-  } else {
-    error1.textContent = "";
-    tabletSelect.style.borderColor = "#ccc";
-  }
-
-  if (input2 === "--:--") {
-    error2.textContent = "Please enter a valid remainder time.";
-    error2.style.display = "block";
-    error2.style.color = "#e34244";
-    remainderTime.style.borderColor = "#e34244";
-    isValid = false;
-  } else {
-    error2.textContent = "";
-    remainderTime.style.borderColor = "#ccc";
-  }
-  return isValid;
-}
-
 function displayRemainders() {
   tableBody.innerHTML = "";
-  remainders.forEach((val, ind) => {
+  for (let i = 0; i < remainders.length; i++) {
     var tr = document.createElement("tr");
     var td1 = document.createElement("td");
-    td1.innerHTML = val.name;
+    td1.innerHTML = remainders[i].name;
     var td2 = document.createElement("td");
-    td2.innerHTML = val.time;
+    td2.innerHTML = remainders[i].time;
     var td3 = document.createElement("td");
     var del = document.createElement("button");
     del.setAttribute("class", "delete");
     del.innerHTML = "Delete";
-    del.addEventListener("click", () => {
-      remainders.splice(ind, 1);
-      tr.remove();
-    });
     td3.appendChild(del);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     tableBody.appendChild(tr);
-  });
+  }
+}
 
-  console.log(remainders);
+tableBody.addEventListener("click", deleteRemainder);
+
+function deleteRemainder(event) {
+  if (event.target.classList.contains("delete")) {
+    var row = event.target.parentNode.parentNode;
+    var index = row.rowIndex - 1; // Adjust index to account for header row
+    remainders.splice(index, 1); // Remove the corresponding remainder from the array
+    displayRemainders(); // Update the displayed remainders
+  }
 }
 
 function checkRemainders() {
@@ -105,12 +83,16 @@ function checkRemainders() {
     (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
   remainders.forEach((val) => {
     if (time2 === val.time) {
+      // Display alert notification
+      // alert("Time to Take " + val.name);
       msg.innerHTML = "Time  to Take " + val.name + "!</s> ";
       alertMessage.style.display = "block";
 
-      audio = new Audio("ring.wav");
+      // Play audio
+      audio = new Audio("ring.wav"); // Replace 'your-audio-file-path.mp3' with the actual path to your audio file
       audio.loop = true;
       audio.play();
+      // Log the alert message in the console
       console.log("Alert: Time to Take " + val.name);
     }
   });
@@ -122,15 +104,16 @@ ok.addEventListener("click", () => {
   );
 
   if (reminderIndex !== -1) {
+    // Remove the reminder from the array
     remainders.splice(reminderIndex, 1);
-
+    // Update displayed remainders
     displayRemainders();
   }
   if (audio) {
     audio.pause();
-    audio.currentTime = 0;
+    audio.currentTime = 0; // Reset audio to the beginning
   }
   alertMessage.style.display = "none";
 });
 
-setInterval(checkRemainders, 60000);
+setInterval(checkRemainders, 60000); // Check remainders every minute
