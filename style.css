@@ -92,6 +92,9 @@ h1 {
   background-color: crimson;
   color: #ffff;
 }
+#selectError,#timeError{
+display: none;
+}
 #alert {
   background-color: white;
   width: 25rem;

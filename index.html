@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medicine Remainder</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" type="module"></script>
+    <script src="script.js"></script>
   </head>
   <body>
     <h1>Remainder App</h1>
@@ -16,7 +16,7 @@
       </div>
       <div class="form">
         <h3>Add Medicine</h3>
-        <form action="" method="post" id="form">
+        <form  method="post" id="form">
           <select name="tablet" id="tablet">
             <option selected>Select your Tablet</option>
             <script>
@@ -38,12 +38,14 @@
               });
             </script>
           </select>
+          <p id="selectError"></p>
           <input
             type="time"
             name="remainder"
             id="remainder"
             placeholder="Enter the Time"
           />
+          <p id="timeError"></p>
           <input type="submit" value="Add remainder" />
         </form>
       </div>
