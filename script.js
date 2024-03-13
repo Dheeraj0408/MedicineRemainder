@@ -4,6 +4,7 @@ var medicineName = document.getElementById("name");
 var remainderTime = document.getElementById("remainder");
 var tableBody = document.getElementById("tbody");
 var alertMessage = document.getElementById("alert");
+var msg = document.getElementById("message");
 var ok = document.getElementById("ok");
 var audio;
 // var users = [];
@@ -23,12 +24,11 @@ function displayTime() {
     (seconds < 10 ? "0" : "") +
     seconds;
 }
-setInterval(displayTime, 1000); 
+setInterval(displayTime, 1000);
 
 form.addEventListener("submit", addRemainder);
 function addRemainder(event) {
   event.preventDefault();
-  ``;
   console.log(event);
   let name = event.target[0].value;
   let time = event.target[1].value;
@@ -36,7 +36,7 @@ function addRemainder(event) {
     name: name,
     time: time,
   };
-  if (name && time) {
+  if (name !== "Select your Tablet" && time) {
     remainders.push(remainder);
     event.target[0].value = "";
     event.target[1].value = "";
@@ -85,11 +85,12 @@ function checkRemainders() {
     if (time2 === val.time) {
       // Display alert notification
       // alert("Time to Take " + val.name);
+      msg.innerHTML = "Time  to Take " + val.name + "!</s> ";
       alertMessage.style.display = "block";
-       
+
       // Play audio
-      audio = new Audio('ring.wav'); // Replace 'your-audio-file-path.mp3' with the actual path to your audio file
-      audio.loop=true;
+      audio = new Audio("ring.wav"); // Replace 'your-audio-file-path.mp3' with the actual path to your audio file
+      audio.loop = true;
       audio.play();
       // Log the alert message in the console
       console.log("Alert: Time to Take " + val.name);
@@ -101,7 +102,6 @@ ok.addEventListener("click", () => {
   var reminderIndex = remainders.findIndex(
     (reminder) => reminder.time === alertMessage.getAttribute("data-time")
   );
-  
 
   if (reminderIndex !== -1) {
     // Remove the reminder from the array
@@ -115,4 +115,5 @@ ok.addEventListener("click", () => {
   }
   alertMessage.style.display = "none";
 });
+
 setInterval(checkRemainders, 60000); // Check remainders every minute
