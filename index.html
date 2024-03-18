@@ -12,31 +12,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
-    <h1>Remainder App</h1>
-    <div class="container">
-      <div class="clock">
-        <p>Time :</p>
-        <h2 id="time"></h2>
+    <h1 class="text-center mt-3">Remainder App</h1>
+    <div class="d-flex justify-content-center flex-wrap">
+      <div class=" clock border p-4 rounded">
+        <p class="fs-4 fw-bold text-center">Time :</p>
+        <h2 id="time" class="text-center fs-1"></h2>
       </div>
       <div class="form">
-        <h3>Add Medicine</h3>
+        <h3 class="text-center mb-3">Add Medicine</h3>
         <form action="" method="post" id="form">
           <select
             name="tablet"
             id="tablet"
             title="tablet"
+            class="form-select border border-primary mb-1"
+            aria-label="Select Tablet"
             onchange="handleTabletChange()"
           >
-            <option selected>Select your Tablet</option>
-            <option>Add Tablet</option>
+            <option selected class="text-center">Select your Tablet</option>
+            <option class="text-center">Add Tablet</option>
           </select>
           <input
             type="time"
             name="remainder"
             id="remainder"
             placeholder="Enter the Time"
+            class="form-control mb-2"
           />
-          <input type="submit" value="Add remainder" />
+          <input type="submit" value="Add remainder" class="btn"/>
         </form>
       </div>
       <div
@@ -78,14 +81,17 @@
         <div id="message">Time to Take Medicine</div>
         <input type="button" id="ok" value="ok" />
       </div>
-      <div class="table-div">
-        <h3>Medicine Remainders</h3>
-        <table id="table">
-          <thead>
+      <div class="table-div border border-secondary rounded p-4 px-5 mt-4">
+        <h3 class="text-center mb-4">Medicine Remainders</h3>
+        <table
+          id="table"
+          class="table table-striped table-bordered table-success table-fluid table-hover"
+        >
+          <thead class="thead-dark">
             <tr>
-              <th>Medicine Name</th>
-              <th>Remainder Time</th>
-              <th>Delete</th>
+              <th scope="col">Medicine Name</th>
+              <th scope="col">Remainder Time</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>

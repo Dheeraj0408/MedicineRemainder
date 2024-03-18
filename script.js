@@ -11,6 +11,15 @@ var addTabForm = document.getElementById("addTabletForm");
 var audio;
 let remainders = [];
 
+fetch("http://localhost:3000/remainders")
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data);
+    remainders = data;
+    displayRemainders();
+  })
+  .catch((err) => console.log(err));
+
 function displayTime() {
   var currentTime = new Date();
   var hours = currentTime.getHours();
@@ -34,6 +43,7 @@ function addRemainder(event) {
   let name = event.target[0].value;
   let time = event.target[1].value;
   let remainder = {
+    id: remainders.length + 1,
     name: name,
     time: time,
   };
@@ -41,6 +51,13 @@ function addRemainder(event) {
     remainders.push(remainder);
     event.target[0].value = "Select your Tablet";
     event.target[1].value = "";
+    fetch("http://localhost:3000/remainders", {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify(remainder),
+    });
   }
   displayRemainders();
 }
@@ -70,7 +87,7 @@ function displayRemainders() {
     td2.innerHTML = remainder.time;
     var td3 = document.createElement("td");
     var del = document.createElement("button");
-    del.setAttribute("class", "delete");
+    del.setAttribute("class", "delete btn btn-danger");
     del.innerHTML = "Delete";
     td3.appendChild(del);
     tr.appendChild(td1);
@@ -83,10 +100,13 @@ function displayRemainders() {
 tableBody.addEventListener("click", deleteRemainder);
 
 function deleteRemainder(event) {
-  console.log("it's working");
   if (event.target.classList.contains("delete")) {
     var row = event.target.parentNode.parentNode;
     var index = row.rowIndex - 1;
+    var deletedRemainder = remainders[index];
+    fetch(`http://localhost:3000/remainders/${deletedRemainder.id}`, {
+      method: "DELETE",
+    });
     remainders.splice(index, 1);
     displayRemainders();
   }
