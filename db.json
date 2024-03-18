@@ -25,5 +25,47 @@
       "name": "Calcium Supplements 1000mg",
       "time": "02:09"
     }
+  ],
+  "tablets": [
+    {
+      "id": 1,
+      "name": "Aspirin (Acetylsalicylic Acid)",
+      "dosage": 325
+    },
+    {
+      "id": 2,
+      "name": "Paracetamol (Acetaminophen)",
+      "dosage": 500
+    },
+    {
+      "id": 3,
+      "name": "Multivitamin Tablets",
+      "dosage": "Varies"
+    },
+    {
+      "id": 4,
+      "name": "Omega-3 Fish Oil Supplements",
+      "dosage": "Varies"
+    },
+    {
+      "id": 5,
+      "name": "Calcium Supplements",
+      "dosage": 1000
+    },
+    {
+      "id": 6,
+      "name": "Diphenhydramine (Benadryl)",
+      "dosage": 25
+    },
+    {
+      "id": 7,
+      "name": "Loratadine (Claritin)",
+      "dosage": 10
+    },
+    {
+      "id": 8,
+      "name": "Protein Shake",
+      "dosage": "200"
+    }
   ]
 }

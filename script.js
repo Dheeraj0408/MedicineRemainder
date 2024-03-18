@@ -68,11 +68,18 @@ function addTablet(event) {
   var newTabletName = document.getElementById("newTabletName").value;
   var newTabletDosage = document.getElementById("newTabletDosage").value;
   if (newTabletName && newTabletDosage) {
-    var newTablet = { name: newTabletName, dosage: newTabletDosage };
+    var newTablet = { id:tablets.length+1,name: newTabletName, dosage: newTabletDosage };
     console.log(newTablet);
     tablets.push(newTablet);
     event.target[0].value = "Select your Tablet";
     event.target[1].value = "";
+    fetch("http://localhost:3000/tablets",{
+      method:"POST",
+      headers:{
+        "content-type":"application/json"
+      },
+      body:JSON.stringify(newTablet)
+    })
     displayTablets(newTablet);
     addTabletModal.hide();
   }

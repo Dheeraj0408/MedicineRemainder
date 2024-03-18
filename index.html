@@ -14,7 +14,7 @@
   <body>
     <h1 class="text-center mt-3">Remainder App</h1>
     <div class="d-flex justify-content-center flex-wrap">
-      <div class=" clock border p-4 rounded">
+      <div class="clock border p-4 rounded">
         <p class="fs-4 fw-bold text-center">Time :</p>
         <h2 id="time" class="text-center fs-1"></h2>
       </div>
@@ -39,7 +39,7 @@
             placeholder="Enter the Time"
             class="form-control mb-2"
           />
-          <input type="submit" value="Add remainder" class="btn"/>
+          <input type="submit" value="Add remainder" class="btn" />
         </form>
       </div>
       <div
@@ -99,21 +99,18 @@
       </div>
     </div>
     <script>
-      var tablets = [
-        { name: "Aspirin (Acetylsalicylic Acid)", dosage: 325 },
-        { name: "Paracetamol (Acetaminophen)", dosage: 500 },
-        { name: "Multivitamin Tablets", dosage: "Varies" },
-        { name: "Omega-3 Fish Oil Supplements", dosage: "Varies" },
-        { name: "Calcium Supplements", dosage: 1000 },
-        { name: "Diphenhydramine (Benadryl)", dosage: 25 },
-        { name: "Loratadine (Claritin)", dosage: 10 },
-      ];
-
+      var tablets = [];
       var tab = document.getElementById("tablet");
+      fetch("http://localhost:3000/tablets")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          tablets = data;
+          tablets.forEach((val) => {
+            displayTablets(val);
+          });
+        });
 
-      tablets.forEach((val) => {
-        displayTablets(val);
-      });
       function displayTablets(val) {
         var option = document.createElement("option");
         option.setAttribute("class", "option");
