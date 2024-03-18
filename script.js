@@ -6,6 +6,8 @@ var tableBody = document.getElementById("tbody");
 var alertMessage = document.getElementById("alert");
 var msg = document.getElementById("message");
 var ok = document.getElementById("ok");
+var addTabForm = document.getElementById("addTabletForm");
+
 var audio;
 let remainders = [];
 
@@ -37,12 +39,27 @@ function addRemainder(event) {
   };
   if (name !== "Select your Tablet" && time) {
     remainders.push(remainder);
-    event.target[0].value = "";
+    event.target[0].value = "Select your Tablet";
     event.target[1].value = "";
   }
   displayRemainders();
 }
 
+addTabForm.addEventListener("submit", addTablet);
+function addTablet(event) {
+  event.preventDefault();
+  var newTabletName = document.getElementById("newTabletName").value;
+  var newTabletDosage = document.getElementById("newTabletDosage").value;
+  if (newTabletName && newTabletDosage) {
+    var newTablet = { name: newTabletName, dosage: newTabletDosage };
+    console.log(newTablet);
+    tablets.push(newTablet);
+    event.target[0].value = "Select your Tablet";
+    event.target[1].value = "";
+    displayTablets(newTablet);
+    addTabletModal.hide();
+  }
+}
 function displayRemainders() {
   tableBody.innerHTML = "";
   remainders.forEach((remainder) => {
@@ -66,7 +83,7 @@ function displayRemainders() {
 tableBody.addEventListener("click", deleteRemainder);
 
 function deleteRemainder(event) {
-  console.log("it's working")
+  console.log("it's working");
   if (event.target.classList.contains("delete")) {
     var row = event.target.parentNode.parentNode;
     var index = row.rowIndex - 1;
