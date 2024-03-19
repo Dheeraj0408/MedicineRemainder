@@ -4,7 +4,7 @@
   "description": "This repository contains code for a Remainder application implemented in JavaScript. It allows users to set reminders for taking medication and displays them in a table format.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
