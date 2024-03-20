@@ -14,7 +14,7 @@ h1 {
   margin: 0 auto;
 }
 .clock {
-  width: 23%;
+  width: 25%;
   min-width: 300px;
   margin: 1rem;
   border: 1px solid #ccc;
@@ -46,6 +46,9 @@ h1 {
   cursor: pointer;
   background-color: crimson;
   color: #ffff;
+}
+#table-div{
+  width: 53%;
 }
 #alert {
   background-color: white;
@@ -87,7 +90,7 @@ h1 {
 .table-div td {
   text-align: center;
   font-size: large;
-  padding: 10px;
+  padding: 15px;
 }
 
 #addTabletForm {
