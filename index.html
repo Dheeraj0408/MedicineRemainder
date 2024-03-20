@@ -101,7 +101,7 @@
     <script>
       var tablets = [];
       var tab = document.getElementById("tablet");
-      fetch("http://localhost:3000/tablets")
+      fetch("https://medicine-remainder-backend.onrender.com/tablets")
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
