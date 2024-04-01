@@ -83,10 +83,7 @@
       </div>
       <div class="table-div border border-secondary rounded p-4 px-5 mt-4" id="table-div">
         <h3 class="text-center mb-4">Medicine Remainders</h3>
-        <table
-          id="table"
-          class="table table-striped table-bordered table-success table-fluid table-hover"
-        >
+        <table id="table" class="table table-striped table-bordered table-success table-fluid table-hover table-responsive">
           <thead class="thead-dark">
             <tr>
               <th scope="col">Medicine Name</th>
@@ -96,6 +93,11 @@
           </thead>
           <tbody id="tbody"></tbody>
         </table>
+        <div class="text-center" id="loader">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
     </div>
     <script>

@@ -6,6 +6,7 @@ const alertMessage = document.getElementById("alert");
 const msg = document.getElementById("message");
 const ok = document.getElementById("ok");
 const addTabForm = document.getElementById("addTabletForm");
+var loader=document.getElementById("loader");
 
 // Global variables
 let remainders = [];
@@ -16,6 +17,7 @@ fetch("https://medicine-remainder-backend.onrender.com/remainders")
   .then((res) => res.json())
   .then((data) => {
     console.log(data)
+    loader.style.display="none";
     remainders = data;
     displayRemainders();
   })
@@ -154,3 +156,6 @@ ok.addEventListener("click", () => {
 
 // Check remainders periodically
 setInterval(checkRemainders, 60000);
+
+
+
