@@ -16,7 +16,6 @@ let audio;
 fetch("https://medicine-remainder-backend.onrender.com/remainders")
   .then((res) => res.json())
   .then((data) => {
-    console.log(data)
     loader.style.display="none";
     remainders = data;
     displayRemainders();
@@ -46,58 +45,15 @@ function addRemainder(event) {
     event.target[0].value = "Select your Tablet";
     event.target[1].value = "";
 
+    // Send POST request to add remainder
     fetch("https://medicine-remainder-backend.onrender.com/remainders", {
       method: "POST",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify(remainder),
-    });
+    })
+    .catch((err) => console.log(err)); // Handle fetch error
   }
   displayRemainders();
-}
-
-// Event listener for adding tablet
-addTabForm.addEventListener("submit", addTablet);
-function addTablet(event) {
-  event.preventDefault();
-  const newTabletName = document.getElementById("newTabletName").value;
-  const newTabletDosage = document.getElementById("newTabletDosage").value;
-
-  if (newTabletName && newTabletDosage) {
-    const newTablet = { id: tablets.length + 1, name: newTabletName, dosage: newTabletDosage };
-    tablets.push(newTablet);
-    event.target[0].value = "Select your Tablet";
-    event.target[1].value = "";
-
-    fetch("https://medicine-remainder-backend.onrender.com/tablets", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(newTablet),
-    });
-
-    displayTablets(newTablet);
-    addTabletModal.hide();
-  }
-}
-
-// Display remainders in the table
-function displayRemainders() {
-  tableBody.innerHTML = "";
-  remainders.forEach((remainder) => {
-    const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    td1.textContent = remainder.name;
-    const td2 = document.createElement("td");
-    td2.textContent = remainder.time;
-    const td3 = document.createElement("td");
-    const del = document.createElement("button");
-    del.setAttribute("class", "delete btn btn-danger");
-    del.textContent = "Delete";
-    td3.appendChild(del);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    tableBody.appendChild(tr);
-  });
 }
 
 // Event listener for deleting remainder
@@ -108,9 +64,11 @@ function deleteRemainder(event) {
     const index = row.rowIndex - 1;
     const deletedRemainder = remainders[index];
 
+    // Send DELETE request to remove remainder
     fetch(`https://medicine-remainder-backend.onrender.com/remainders/${deletedRemainder.id}`, {
       method: "DELETE",
-    });
+    })
+    .catch((err) => console.log(err)); // Handle fetch error
 
     remainders.splice(index, 1);
     displayRemainders();
@@ -157,5 +115,23 @@ ok.addEventListener("click", () => {
 // Check remainders periodically
 setInterval(checkRemainders, 60000);
 
-
-
+// Function to display remainders in the table
+function displayRemainders() {
+  tableBody.innerHTML = "";
+  remainders.forEach((remainder) => {
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td");
+    td1.textContent = remainder.name;
+    const td2 = document.createElement("td");
+    td2.textContent = remainder.time;
+    const td3 = document.createElement("td");
+    const del = document.createElement("button");
+    del.setAttribute("class", "delete btn btn-danger");
+    del.textContent = "Delete";
+    td3.appendChild(del);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tableBody.appendChild(tr);
+  });
+}
